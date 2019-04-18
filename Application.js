@@ -48,11 +48,12 @@ class Application extends Koa {
 
 function loadExtensions() {
     const extensionsDir = path.join(process.cwd(), 'extensions');
-    const files = fs.readdirSync(extensionsDir);
+    const extensions = fs.readdirSync(extensionsDir);
     const routers = [];
-    files.forEach(file => {
-        if (file.endsWith('.js')) {
-            const router = require(path.join(extensionsDir, file));
+    extensions.forEach(extension => {
+        const routerDir = path.join(extensionsDir, extension, 'router.js');
+        if (fs.existsSync(routerDir)) {
+            const router = require(routerDir);
             if (typeof router === 'function') {
                 routers.push(router);
             }
