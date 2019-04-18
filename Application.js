@@ -6,6 +6,8 @@ const path = require('path');
 
 class Application extends Koa {
     init() {
+        this.router = new Router();
+
         this.use(views(__dirname + '/views', {
             map: {
                 html: 'ejs'
@@ -24,15 +26,16 @@ class Application extends Koa {
     run() {
         this.init();
 
-        const router = require('./router');
+        const localRouter = require(path.join(process.cwd(), 'router'));
 
-        const routers = loadExtensions().concat(router);
+        const routers = loadExtensions().concat(localRouter);
         routers.forEach(router => {
-            this.use(router.routes()).use(router.allowedMethods());
+            router(this);
         })
 
+        this.use(this.router.routes()).use(this.router.allowedMethods());
 
-        this.on('error', (err, ctx)=>{
+        this.on('error', (err, ctx) => {
             console.log(err);
         })
 
@@ -48,9 +51,9 @@ function loadExtensions() {
     const files = fs.readdirSync(extensionsDir);
     const routers = [];
     files.forEach(file => {
-        if(file.endsWith('.js')){
+        if (file.endsWith('.js')) {
             const router = require(path.join(extensionsDir, file));
-            if (router instanceof Router) {
+            if (typeof router === 'function') {
                 routers.push(router);
             }
         }
