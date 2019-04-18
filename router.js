@@ -8,6 +8,8 @@ home.get('/', async ( ctx )=>{
     <ul>
       <li><a href="/page/helloworld">/page/helloworld</a></li>
       <li><a href="/page/404">/page/404</a></li>
+      <li><a href="/info">/info</a></li>
+      <li><a href="/fm">/fm</a></li>
     </ul>
   `
   ctx.body = html
@@ -18,7 +20,7 @@ let page = new Router()
 page.get('/404', async ( ctx )=>{
   ctx.body = '404 page!'
 }).get('/helloworld', async ( ctx )=>{
-  ctx.body = 'helloworld page!'
+  await ctx.render('hello');
 })
 
 // 装载所有子路由
