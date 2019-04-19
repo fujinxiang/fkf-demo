@@ -9,6 +9,6 @@
   "author": "fujinxiang",
   "license": "MIT",
   "dependencies": {
-    "fkf": "^1.0.0"
+    "fkf": "^1.0.3"
   }
 }
