@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>36kr 专栏阅读</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  </head>
+
+  <body>
+    <div class="container">
+      <ul>
+        <% data && data.items.forEach(function(item){%>
+        <li><a href='https://36kr.com/p/<%=item.id %>' target="_blank"><%=item.title %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+  </body>
+</html>
